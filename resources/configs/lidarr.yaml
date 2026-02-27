@@ -1,0 +1,18 @@
+container: lidarr
+image: lscr.io/linuxserver/lidarr
+tag: latest
+restart: always
+
+ports:
+  - "8686:8686"
+
+env:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "America/Monterrey"
+
+volumes:
+  - "/home/docker/lidarr/config:/config"
+  - "/mnt/Media:/Media"
+  - "/mnt/Media/Downloads:/downloads"
+  - "/mnt/Media/Music:/music"
