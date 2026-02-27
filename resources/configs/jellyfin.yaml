@@ -1,0 +1,19 @@
+container: jellyfin
+image: lscr.io/linuxserver/jellyfin
+tag: latest
+restart: always
+
+ports:
+  - "8096:8096"
+  - "8920:8920"
+
+env:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "America/Monterrey"
+
+volumes:
+  - "/home/docker/jellyfin/config:/config"
+  - "/home/docker/jellyfin/cache:/cache"
+  - "/mnt/Media:/Media"
+  
