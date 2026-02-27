@@ -54,8 +54,9 @@ appPipeline(
 ```
 
 3. The library loads the YAML config:
-
+```
 def cfg = readYaml text: libraryResource(args.configFile)
+```
 
 4. The library builds and executes the correct Docker commands:
 
