@@ -6,7 +6,7 @@ def call(Map args = [:]) {
         parameters {
             choice(
                 name: 'ACTION',
-                choices: ['Deploy', 'Update', 'Stop and Run'],
+                choices: ['Deploy', 'Update', 'Stop and Run', 'Delete'],
                 description: 'Select the deployment action'
             )
         }
@@ -23,6 +23,14 @@ def call(Map args = [:]) {
                         // Load YAML from shared library resources
                         cfg = readYaml text: libraryResource(args.configFile)
 
+                        // Utility job? Run a different pipeline.
+                        if (cfg.utility) {
+                            echo "Running utility pipeline for ${args.appName}"
+                            runUtilityPipeline(cfg)
+                            currentBuild.result = 'SUCCESS'
+                            return
+                        }
+
                         // Build full image reference
                         fullImage = "${cfg.image}:${cfg.tag ?: 'latest'}"
 
@@ -33,13 +41,14 @@ def call(Map args = [:]) {
             }
 
             stage('Pull Image (Update only)') {
-                when { expression { params.ACTION == 'Update' } }
+                when { expression { params.ACTION == 'Update' && !cfg.utility } }
                 steps {
                     sh "docker pull ${fullImage}"
                 }
             }
 
             stage('Check Existing Container') {
+                when { expression { !cfg.utility } }
                 steps {
                     script {
                         containerExists = sh(
@@ -53,8 +62,24 @@ def call(Map args = [:]) {
             }
 
             stage('Perform Action') {
+                when { expression { !cfg.utility } }
                 steps {
                     script {
+
+                        //
+                        // DELETE ACTION
+                        //
+                        if (params.ACTION == 'Delete' && containerExists) {
+
+                            echo "Deleting container ${cfg.container}"
+
+                            sh """
+                                docker stop ${cfg.container} || true
+                                docker rm ${cfg.container} || true
+                            """
+
+                            return
+                        }
 
                         //
                         // Build docker run command dynamically
@@ -129,6 +154,44 @@ def call(Map args = [:]) {
                                 ${finalRunCmd}
                             """
                         }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+//
+// UTILITY PIPELINE
+//
+def runUtilityPipeline(cfg) {
+
+    pipeline {
+        agent any
+
+        stages {
+
+            stage('Run Utility Task') {
+                steps {
+                    script {
+
+                        if (cfg.container == null) {
+                            error "Utility job requires 'container' in YAML"
+                        }
+
+                        echo "Running utility task for container: ${cfg.container}"
+
+                        sh """
+                        if ! docker ps -a --format '{{.Names}}' | grep -q '^${cfg.container}\$'; then
+                            echo "ERROR: Container '${cfg.container}' not found."
+                            exit 1
+                        fi
+
+                        echo "Extracting temporary admin password (if available)..."
+                        docker logs ${cfg.container} 2>&1 | grep -i 'temporary password' \
+                            || echo "No temporary password found. The container may have already been initialized."
+                        """
                     }
                 }
             }
