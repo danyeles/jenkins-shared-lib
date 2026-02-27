@@ -1,0 +1,30 @@
+container: qbittorrent-nox
+image: qbittorrentofficial/qbittorrent-nox
+tag: latest
+restart: always
+
+ports:
+  - "6881:6881/tcp"
+  - "6881:6881/udp"
+  - "8787:8787/tcp"
+
+env:
+  QBT_EULA: "accept"
+  QBT_VERSION: "latest"
+  QBT_WEBUI_PORT: "8787"
+  TZ: "America/Monterrey"
+
+volumes:
+  - "/home/docker/qbittorrentofficial/config:/config"
+  - "/media/Media:/Media"
+  - "/media/Media/Downloads:/downloads"
+  - "/media/Media/Movies:/Movies"
+  - "/media/Media/MyMovies:/MyMovies"
+  - "/media/Media/TVShows:/TVShows"
+  - "/media/Media/MyTVShows:/MyTVShows"
+
+docker_extra:
+  read_only: true
+  stop_timeout: 1800
+  tmpfs:
+    - "/tmp"
