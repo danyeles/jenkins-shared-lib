@@ -1,0 +1,18 @@
+container: readarr
+image: ghcr.io/hotio/readarr
+tag: latest
+restart: always
+
+ports:
+  - "2727:2727"
+
+env:
+  PUID: "1000"
+  PGID: "1000"
+  UMASK: "002"
+  TZ: "Etc/UTC"
+
+volumes:
+  - "/home/docker/readarr/config:/config"
+  - "/media/Media/Books:/data"
+  - "/media/Media/Downloads:/downloads"
