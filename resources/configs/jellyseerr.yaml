@@ -1,0 +1,21 @@
+container: jellyseerr
+image: ghcr.io/fallenbagel/jellyseerr
+tag: latest
+restart: always
+
+ports:
+  - "5055:5055"
+
+env:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "America/Monterrey"
+
+volumes:
+  - "/home/docker/jellyseerr/config:/config"
+  - "/mnt/Media:/Media"
+  - "/mnt/Media/Downloads:/downloads"
+  - "/mnt/Media/TVShows:/TVShows"
+  - "/mnt/Media/MyShows:/MyShows"
+  - "/mnt/Media/Movies:/Movies"
+  - "/mnt/Media/MyMovies:/MyMovies"
