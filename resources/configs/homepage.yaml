@@ -1,0 +1,17 @@
+container: homepage
+image: ghcr.io/gethomepage/homepage
+tag: latest
+restart: always
+
+ports:
+  - "3000:3000"
+
+env:
+  HOMEPAGE_ALLOWED_HOSTS: "*"
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "America/Monterrey"
+
+volumes:
+  - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  - "/home/docker/homepage/config:/config"
