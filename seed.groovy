@@ -1,9 +1,11 @@
-def apps = [
-    [name: 'sonarr', config: 'configs/sonarr.yaml']
-]
+def apps = readYaml file: 'apps.yaml'
 
-apps.each { app ->
+apps.apps.each { app ->
+
     pipelineJob("deploy-${app.name}") {
+
+        description("Auto‑generated job for ${app.name}")
+
         definition {
             cps {
                 script("""
