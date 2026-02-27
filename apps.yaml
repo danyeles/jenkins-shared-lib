@@ -1,0 +1,3 @@
+apps:
+  - name: sonarr
+    config: configs/sonarr.yaml
