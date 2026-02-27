@@ -1,1 +1,19 @@
+container: radarr
+image: linuxserver/radarr
+tag: latest
+restart: always
 
+ports:
+  - "7878:7878"
+
+env:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "America/Monterrey"
+
+volumes:
+  - "/home/docker/radarr/config:/config"
+  - "/mnt/Media:/Media"
+  - "/mnt/Media/Downloads:/downloads"
+  - "/mnt/Media/Movies:/Movies"
+  - "/mnt/Media/MyMovies:/MyMovies"
