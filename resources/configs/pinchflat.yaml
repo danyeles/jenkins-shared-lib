@@ -1,0 +1,17 @@
+container: pinchflat
+image: ghcr.io/kieraneglin/pinchflat
+tag: latest
+restart: always
+
+ports:
+  - "8945:8945"
+
+env:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "America/Monterrey"
+
+volumes:
+  - "/home/docker/pinchflat/config:/config"
+  - "/mnt/Media/Downloads:/downloads"
+  - "/mnt/Media:/Media"
