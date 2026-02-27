@@ -1,1 +1,19 @@
+container: sonarr
+image: lscr.io/linuxserver/sonarr
+tag: latest
+restart: always
 
+ports:
+  - "8989:8989"
+
+env:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "America/Monterrey"
+
+volumes:
+  - "/home/docker/sonarr/config:/config"
+  - "/mnt/Media:/Media"
+  - "/mnt/Media/Downloads:/downloads"
+  - "/mnt/Media/TVShows:/TVShows"
+  - "/mnt/Media/MyShows:/MyShows"
