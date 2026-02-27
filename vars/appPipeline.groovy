@@ -10,7 +10,7 @@ def call(Map args = [:]) {
             stage('Load config') {
                 steps {
                     script {
-                        cfg = readYaml file: args.configFile
+                        cfg = readYaml text: libraryResource(args.configFile)
                     }
                 }
             }
