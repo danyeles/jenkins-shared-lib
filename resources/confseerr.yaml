@@ -1,7 +1,7 @@
-container: jellyseerr
-image: ghcr.io/fallenbagel/jellyseerr
+container: seerr
+image: ghcr.io/seerr-team/seerr:latest
 tag: latest
-restart: always
+restart: unless-stopped
 
 ports:
   - "5055:5055"
@@ -12,7 +12,7 @@ env:
   TZ: "America/Monterrey"
 
 volumes:
-  - "/home/docker/jellyseerr/config:/config"
+  - "/home/docker/jellyseerr/config:/app/config"
   - "/mnt/Media:/Media"
   - "/mnt/Media/Downloads:/downloads"
   - "/mnt/Media/TVShows:/TVShows"
