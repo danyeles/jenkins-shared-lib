@@ -12,7 +12,7 @@ env:
   TZ: "America/Monterrey"
 
 volumes:
-  - "/home/docker/jellyseerr/config:/app/config"
+  - "/home/docker/seerr/config:/app/config"
   - "/mnt/Media:/Media"
   - "/mnt/Media/Downloads:/downloads"
   - "/mnt/Media/TVShows:/TVShows"
