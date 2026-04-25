@@ -16,12 +16,12 @@ env:
 
 volumes:
   - "/home/docker/qbittorrentofficial/config:/config"
-  - "/media/Media:/Media"
-  - "/media/Media/Downloads:/downloads"
-  - "/media/Media/Movies:/Movies"
-  - "/media/Media/MyMovies:/MyMovies"
-  - "/media/Media/TVShows:/TVShows"
-  - "/media/Media/MyTVShows:/MyTVShows"
+  - "/mnt/Media:/Media"
+  - "/mnt/Media/Downloads:/downloads"
+  - "/mnt/Media/Movies:/Movies"
+  - "/mnt/Media/MyMovies:/MyMovies"
+  - "/mnt/Media/TVShows:/TVShows"
+  - "/mnt/Media/MyTVShows:/MyTVShows"
 
 docker_extra:
   read_only: true
