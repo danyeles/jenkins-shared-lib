@@ -15,7 +15,7 @@ env:
 
 volumes:
   - "/home/docker/bazarr/config:/config"
-  - "/media/Media/Movies:/Movies"
-  - "/media/Media/MyMovies:/MyMovies"
-  - "/media/Media/TVShows:/TVShows"
-  - "/media/Media/MyTVShows:/MyTVShows"
+  - "/mnt/Media/Movies:/Movies"
+  - "/mnt/Media/MyMovies:/MyMovies"
+  - "/mnt/Media/TVShows:/TVShows"
+  - "/mnt/Media/MyTVShows:/MyTVShows"
