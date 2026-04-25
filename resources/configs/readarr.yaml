@@ -14,5 +14,5 @@ env:
 
 volumes:
   - "/home/docker/readarr/config:/config"
-  - "/media/Media/Books:/data"
-  - "/media/Media/Downloads:/downloads"
+  - "/mnt/Media/Books:/data"
+  - "/mnt/Media/Downloads:/downloads"
