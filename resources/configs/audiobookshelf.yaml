@@ -1,0 +1,19 @@
+container: audiobookshelf
+image: ghcr.io/advplyr/audiobookshelf
+tag: latest
+restart: unless-stopped
+
+ports:
+  - "13378:80"
+
+env:
+  TZ: "America/Monterrey"
+
+volumes:
+  - "/mnt/Media/audiobookshelf/config:/config"
+  - "/mnt/Media/audiobookshelf/metadata:/metadata"
+  - "/mnt/Media/bookshelf/audiobooks:/audiobooks"
+  - "/mnt/Media/bookshelf/podcasts:/podcasts"
+  - "/mnt/Media/bookshelf/ebooks:/ebooks"
+  - "/mnt/Media/bookshelf/mangas:/mangas"
+  - "/mnt/Media/bookshelf/others:/others"

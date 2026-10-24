@@ -1,0 +1,32 @@
+container: tdarr
+image: ghcr.io/haveagitgat/tdarr
+tag: latest
+restart: always
+
+# appPipeline currently does not support --network or --log-opt; add support there before using these Docker options.
+ports:
+  - "8265:8265"
+  - "8266:8266"
+
+env:
+  serverIP: "0.0.0.0"
+  serverPort: "8266"
+  webUIPort: "8265"
+  internalNode: "true"
+  inContainer: "true"
+  ffmpegVersion: "7"
+  nodeName: "MyInternalNode"
+  auth: "false"
+  openBrowser: "false"
+  maxLogSizeMB: "10"
+  cronPluginUpdate: ""
+  TZ: "America/Monterrey"
+  PUID: "1000"
+  PGID: "1000"
+
+volumes:
+  - "/home/docker/tdarr/server:/app/server"
+  - "/home/docker/tdarr/configs:/app/configs"
+  - "/home/docker/tdarr/logs:/app/logs"
+  - "/mnt/Media:/media"
+  - "/transcode_cache:/temp"

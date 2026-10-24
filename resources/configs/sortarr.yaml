@@ -1,0 +1,13 @@
+container: sortarr
+image: ghcr.io/jaredharper1/sortarr
+tag: latest
+restart: always
+
+ports:
+  - "9595:8787"
+
+env:
+  TZ: "America/Monterrey"
+
+volumes:
+  - "/home/docker/sortarr/config:/config"

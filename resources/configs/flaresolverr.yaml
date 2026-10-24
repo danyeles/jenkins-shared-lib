@@ -1,0 +1,10 @@
+container: flaresolverr
+image: ghcr.io/flaresolverr/flaresolverr
+tag: latest
+restart: unless-stopped
+
+ports:
+  - "8191:8191"
+
+env:
+  LOG_LEVEL: "info"
