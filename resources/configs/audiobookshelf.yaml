@@ -10,8 +10,8 @@ env:
   TZ: "America/Monterrey"
 
 volumes:
-  - "/mnt/Media/audiobookshelf/config:/config"
-  - "/mnt/Media/audiobookshelf/metadata:/metadata"
+  - "/home/docker/audiobookshelf/config:/config"
+  - "/home/docker/audiobookshelf/metadata:/metadata"
   - "/mnt/Media/bookshelf/audiobooks:/audiobooks"
   - "/mnt/Media/bookshelf/podcasts:/podcasts"
   - "/mnt/Media/bookshelf/ebooks:/ebooks"
