@@ -1,5 +1,5 @@
 container: seerr
-image: ghcr.io/seerr-team/seerr:latest
+image: ghcr.io/seerr-team/seerr
 tag: latest
 restart: unless-stopped
 

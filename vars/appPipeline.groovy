@@ -1,4 +1,6 @@
 def call(Map args = [:]) {
+    def cfg = [:]
+    def fullImage = ''
 
     pipeline {
         agent any
@@ -31,8 +33,16 @@ def call(Map args = [:]) {
                             return
                         }
 
-                        // Build full image reference
-                        fullImage = "${cfg.image}:${cfg.tag ?: 'latest'}"
+                        def image = cfg.image?.toString()?.trim()
+                        if (!image) {
+                            error "Image is required in ${args.configFile}"
+                        }
+
+                        // Preserve an image tag or digest already included in the image reference.
+                        def imageName = image.substring(image.lastIndexOf('/') + 1)
+                        fullImage = image.contains('@') || imageName.contains(':')
+                            ? image
+                            : "${image}:${cfg.tag ?: 'latest'}"
 
                         echo "Loaded config for ${args.appName}"
                         echo "Using image: ${fullImage}"
