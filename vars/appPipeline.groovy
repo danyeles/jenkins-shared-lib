@@ -105,6 +105,11 @@ def call(Map args = [:]) {
                             runCmd << "-v ${v}"
                         }
 
+                        // Devices
+                        cfg.devices?.each { device ->
+                            runCmd << "--device ${device}"
+                        }
+
                         // Extra docker flags
                         if (cfg.docker_extra?.read_only) {
                             runCmd << "--read-only"
