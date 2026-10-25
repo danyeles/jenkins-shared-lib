@@ -15,5 +15,6 @@ env:
 volumes:
   - "/home/docker/jellyfin/config:/config"
   - "/home/docker/jellyfin/cache:/cache"
+  - "/home/docker/jellyfin/cache:/var/cache/jellyfin"
   - "/mnt/Media:/Media"
   
