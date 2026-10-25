@@ -19,3 +19,5 @@ volumes:
   - "/home/docker/jellyfin/metadata:/var/lib/jellyfin/metadata"
   - "/mnt/Media:/mnt/Media"
   
+devices:
+  - "/dev/dri:/dev/dri"
