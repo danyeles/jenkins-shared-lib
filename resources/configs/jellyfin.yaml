@@ -17,5 +17,5 @@ volumes:
   - "/home/docker/jellyfin/cache:/cache"
   - "/home/docker/jellyfin/cache:/var/cache/jellyfin"
   - "/home/docker/jellyfin/metadata:/var/lib/jellyfin/metadata"
-  - "/mnt/Media:/Media"
+  - "/mnt/Media:/mnt/Media"
   
