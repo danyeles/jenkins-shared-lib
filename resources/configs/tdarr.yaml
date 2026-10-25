@@ -28,5 +28,9 @@ volumes:
   - "/home/docker/tdarr/server:/app/server"
   - "/home/docker/tdarr/configs:/app/configs"
   - "/home/docker/tdarr/logs:/app/logs"
+  - "/home/docker/tdarr/temp:/temp"
   - "/mnt/Media:/media"
   - "/transcode_cache:/temp"
+
+devices:
+  - "/dev/dri:/dev/dri"
