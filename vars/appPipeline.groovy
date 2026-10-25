@@ -51,12 +51,12 @@ def call(Map args = [:]) {
                 when { expression { !cfg.utility } }
                 steps {
                     script {
-                        containerExists = sh(
-                            script: "docker ps -aq -f name=${cfg.container}",
+                        env.EXISTING_CONTAINER_ID = sh(
+                            script: "docker ps -aq --filter 'name=^/${cfg.container}\$'",
                             returnStdout: true
                         ).trim()
 
-                        echo containerExists ? "Container exists" : "Container does not exist"
+                        echo env.EXISTING_CONTAINER_ID ? "Container exists" : "Container does not exist"
                     }
                 }
             }
@@ -65,19 +65,21 @@ def call(Map args = [:]) {
                 when { expression { !cfg.utility } }
                 steps {
                     script {
+                        def existingContainerId = env.EXISTING_CONTAINER_ID
 
                         //
                         // DELETE ACTION
                         //
-                        if (params.ACTION == 'Delete' && containerExists) {
-
-                            echo "Deleting container ${cfg.container}"
-
-                            sh """
-                                docker stop ${cfg.container} || true
-                                docker rm ${cfg.container} || true
-                            """
-
+                        if (params.ACTION == 'Delete') {
+                            if (existingContainerId) {
+                                echo "Deleting container ${cfg.container}"
+                                sh """
+                                    docker stop ${cfg.container} || true
+                                    docker rm ${cfg.container} || true
+                                """
+                            } else {
+                                echo "Container ${cfg.container} does not exist; nothing to delete"
+                            }
                             return
                         }
 
@@ -132,17 +134,25 @@ def call(Map args = [:]) {
                         // ACTION HANDLING
                         //
 
-                        if (params.ACTION == 'Update' && containerExists) {
+                        if (params.ACTION == 'Update' && existingContainerId) {
 
                             echo "Updating container ${cfg.container}"
 
                             sh """
-                                docker stop ${cfg.container}
-                                docker rm ${cfg.container}
+                                docker rm -f ${cfg.container}
                                 ${finalRunCmd}
                             """
 
-                        } else if (params.ACTION == 'Stop and Run' && containerExists) {
+                        } else if (params.ACTION == 'Deploy' && existingContainerId) {
+
+                            echo "Replacing existing container ${cfg.container} using the configured image"
+
+                            sh """
+                                docker rm -f ${cfg.container}
+                                ${finalRunCmd}
+                            """
+
+                        } else if (params.ACTION == 'Stop and Run' && existingContainerId) {
 
                             echo "Restarting container ${cfg.container} without updating image"
 

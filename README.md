@@ -63,9 +63,9 @@ def cfg = readYaml text: libraryResource(args.configFile)
 4. The library builds and executes the correct Docker commands:
 
 - Pull image (if Update)
-- Stop/remove container (if Update)
+- Stop/remove and recreate an existing container (if Deploy or Update; Update pulls the image first)
 - Start container (if Stop and Run)
-- Deploy container (if Deploy)
+- Create container if it does not already exist (if Deploy or Update)
 
 Example YAML Config
 resources/configs/sonarr.yaml
