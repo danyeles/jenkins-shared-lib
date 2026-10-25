@@ -30,7 +30,6 @@ volumes:
   - "/home/docker/tdarr/logs:/app/logs"
   - "/home/docker/tdarr/temp:/temp"
   - "/mnt/Media:/media"
-  - "/transcode_cache:/temp"
 
 devices:
   - "/dev/dri:/dev/dri"
