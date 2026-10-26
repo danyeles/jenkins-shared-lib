@@ -21,7 +21,7 @@ volumes:
   - "/mnt/Media/Movies:/Movies"
   - "/mnt/Media/MyMovies:/MyMovies"
   - "/mnt/Media/TVShows:/TVShows"
-  - "/mnt/Media/MyTVShows:/MyTVShows"
+  - "/mnt/Media/MyShows:/MyShows"
 
 docker_extra:
   read_only: true
