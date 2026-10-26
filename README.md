@@ -92,6 +92,21 @@ volumes:
   - "/mnt/Media/MyShows:/MyShows"
 ```
 
+### Passing a supplementary host group
+
+Configs can use `group_add` to pass a supplementary group ID to Docker. The
+Jellyfin and Tdarr configs currently use `990`, the render-group ID on this
+host. Confirm the ID on the Docker host with:
+
+```bash
+getent group render | cut -d: -f3
+```
+
+If the host uses a different group for `/dev/dri`, look up that device's group
+instead (often `video`) and update `group_add` in both configs. The pipeline
+also supports `${RENDER_GID}` as a config value, which it resolves from the
+Jenkins environment and validates before deployment.
+
 
 Installing the Shared Library in Jenkins
 1. Go to:

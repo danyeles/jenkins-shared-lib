@@ -102,6 +102,22 @@ def call(Map args = [:]) {
                         runCmd << "--name ${cfg.container}"
                         runCmd << "--restart ${cfg.restart ?: 'always'}"
 
+                        // Supplementary groups
+                        if (params.ACTION != 'Stop and Run') {
+                            cfg.group_add?.each { group ->
+                                def groupId = group.toString().trim()
+                                if (groupId == '${RENDER_GID}') {
+                                    groupId = env.RENDER_GID?.trim()
+                                    if (!groupId || !(groupId ==~ /\d+/)) {
+                                        error "RENDER_GID must be set to the host render group ID before deploying ${cfg.container}"
+                                    }
+                                } else if (!(groupId ==~ /\d+/)) {
+                                    error "group_add entries must be numeric group IDs or '\${RENDER_GID}'"
+                                }
+                                runCmd << "--group-add ${groupId}"
+                            }
+                        }
+
                         // Ports
                         cfg.ports?.each { p ->
                             runCmd << "-p ${p}"

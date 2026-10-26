@@ -3,6 +3,9 @@ image: ghcr.io/haveagitgat/tdarr
 tag: latest
 restart: always
 
+group_add:
+  - "990"
+
 # appPipeline currently does not support --network or --log-opt; add support there before using these Docker options.
 ports:
   - "8265:8265"
